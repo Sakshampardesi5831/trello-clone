@@ -22,6 +22,13 @@ const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
 // });
 export default clerkMiddleware((auth, request) => {
   if(!isPublicRoute(request)) {
+    if(!auth().userId){
+      return auth().redirectToSignIn({returnBackUrl:request.url});
+    }
+    if(auth().userId && !auth().orgId && request.nextUrl.pathname!=="/select-org"){
+      const orgSelection=new URL("/select-org", request.url);
+      return NextResponse.redirect(orgSelection);
+    }
      auth().protect(); 
   }
    return NextResponse.next();
@@ -29,18 +36,3 @@ export default clerkMiddleware((auth, request) => {
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
-/**
- * import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)']);
-
-export default clerkMiddleware((auth, request) => {
-  if(!isPublicRoute(request)) {
-    auth().protect();
-  }
-});
-
-export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
-};
- */
