@@ -35,13 +35,13 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
         toast.error(error);
       },
     });
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKeyDown =  (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         disableEditing();
       }
     };
     useOnClickOutside(formRef, disableEditing);
-    useEventListener("keydown", onKeyDown);
+    //useEventListener("keydown", onKeyDown);
 
     const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
       e
