@@ -28,7 +28,8 @@ const ProModel = () => {
     },
   });
   const onClick = () => {
-    execute({});
+    // execute({});
+    toast.error("Payment Gateway is in progress");
   };
   return (
     <Fragment>
