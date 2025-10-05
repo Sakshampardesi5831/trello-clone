@@ -17,27 +17,32 @@ const ActivityListPage =async  () => {
   })
   return (
     <Fragment>
-        <ol className='space-y-4 mt-4'>
-            <p className='hidden last:block text-xs text-center text-muted-foreground '>
-                No Activity found inside this organization
-            </p>
-            {auditLogs.map((log)=>(
-                <ActivityItem key={log.id} data={log}/>
-            ))}
-        </ol>
+        <div className="space-y-3 max-h-96 overflow-y-auto">
+            {auditLogs.length === 0 ? (
+                <div className="text-center py-8">
+                    <p className="text-muted-foreground">
+                        No Activity found inside this organization
+                    </p>
+                </div>
+            ) : (
+                auditLogs.map((log)=>(
+                    <ActivityItem key={log.id} data={log}/>
+                ))
+            )}
+        </div>
     </Fragment>
   )
 }
 
 ActivityListPage.Skeleton=function ActivityListPageSkeleton(){
    return (
-    <ol className='space-y-4 mt-4'>
-        <Skeleton className='w-[80%] h-14'/>
-        <Skeleton className='w-[50%] h-14'/>
-        <Skeleton className='w-[70%] h-14'/>
-        <Skeleton className='w-[60%] h-14'/>
-        <Skeleton className='w-[75%] h-14'/>
-    </ol>
+    <div className="space-y-3 max-h-96 overflow-y-auto">
+        <Skeleton className='w-full h-16'/>
+        <Skeleton className='w-full h-16'/>
+        <Skeleton className='w-full h-16'/>
+        <Skeleton className='w-full h-16'/>
+        <Skeleton className='w-full h-16'/>
+    </div>
    )
 }
 
