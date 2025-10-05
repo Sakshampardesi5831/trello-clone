@@ -7,23 +7,42 @@ interface ActivityItemProps {
   data: AuditLog;
 }
 const ActivityItem = ({ data }: ActivityItemProps) => {
+  const getActionColor = (action: string) => {
+    switch (action) {
+      case 'CREATE':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'UPDATE':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'DELETE':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
   return (
     <Fragment>
-      <li className="flex items-center gap-x-2">
-        <Avatar className="h-8 w-8">
+      <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors">
+        <Avatar className="h-8 w-8 flex-shrink-0">
           <AvatarImage src={data.userImage} />
         </Avatar>
-        <div className="flex flex-col space-y-0.5">
-          <p className="text-sm text-muted-foreground">
-            <span className="font-semibold lowercase text-neutral-700">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-sm font-medium text-gray-900 truncate">
               {data.userName}
-            </span> {generateLogMessage(data)}{" "}
+            </span>
+            <span className={`text-xs px-2 py-1 rounded-full border ${getActionColor(data.action)}`}>
+              {data.action}
+            </span>
+          </div>
+          <p className="text-sm text-gray-600 mb-1 truncate">
+            {generateLogMessage(data)}
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-gray-500">
             {format(new Date(data.createdAt), "MMM d, yyyy 'at' h:mm a")}
           </p>
         </div>
-      </li>
+      </div>
     </Fragment>
   );
 };
