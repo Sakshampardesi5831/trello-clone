@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "Taskify"
-    ]
+    ],
+    "prisma.pinToPrisma6": true
 }
